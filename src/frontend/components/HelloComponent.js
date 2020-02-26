@@ -6,8 +6,11 @@ class HelloComponent extends Component {
   }
 
   render() {
+    const styleObj = {
+      color: 'white'
+    }
     return (
-      <h1>Hello World</h1>
+      <h1 style={styleObj}>Hello World</h1>
     )
   }
 }

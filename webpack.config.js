@@ -38,6 +38,8 @@ const frontend = {
     liveReload: true,
     after: (app, server, compiler) => {
       //console.log(`Including the backend...`)
+      const bodyParser = require('body-parser')
+      app.use(bodyParser.json())
       app.use(require('./src/backend/routes'))
     }
   },
