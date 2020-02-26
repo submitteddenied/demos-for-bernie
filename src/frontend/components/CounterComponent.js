@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 
-const POLL_INTERVAL_MS = 1000
+import background_url from '../assets/counter-background.png'
+
+const POLL_INTERVAL_MS = 500
 
 class CounterComponent extends Component {
   constructor() {
@@ -35,11 +37,16 @@ class CounterComponent extends Component {
   }
 
   render() {
-    const styleObj = {
+    const containerStyle = {
+      backgroundImage: "url(" + background_url + ")"
+    }
+    const labelStyle = {
       color: 'white'
     }
     return (
-      <h1 style={styleObj}>{this.state.count}</h1>
+      <div className="counter">
+        <h1 style={labelStyle}>{this.state.count}</h1>
+      </div>
     )
   }
 }

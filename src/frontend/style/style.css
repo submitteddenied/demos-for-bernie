@@ -1,0 +1,24 @@
+#container {
+  display: flex;
+  justify-content: center;
+  font-family: 'Orbitron', ;
+}
+
+h1 {
+  font-family: 'Orbitron';
+  margin: 0;
+  font-weight: 100;
+  font-size: 48px;
+}
+
+.counter {
+  position: relative;
+  background-image: url('../assets/counter-background.png');
+  background-size: contain;
+  width: 180px;
+  height: 60px;
+  text-align: center;
+  top: 79px;
+  left: -2px;
+  background-repeat: no-repeat;
+}
