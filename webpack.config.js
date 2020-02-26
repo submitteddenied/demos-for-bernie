@@ -33,7 +33,7 @@ const frontend = {
         test: /\.png$/,
         loader: 'file-loader',
         options: {
-          name: '[path][name].[ext]',
+          name: 'assets/[name].[ext]',
         }
       }
     ]
@@ -60,11 +60,16 @@ const frontend = {
 }
 
 const backend = {
-  entry: path.resolve("src/backend/app.js"),
+  entry: path.resolve("src/backend/dev.js"),
   target: "node",
   output: {
     path: path.resolve(__dirname, "dist", "backend")
   }
 }
 
-module.exports = [frontend, backend]
+module.exports = (env, argv) => {
+  if(argv.mode === 'production') {
+    backend.entry = path.resolve("src/backend/lambda.js")
+  }
+  return [frontend, backend]
+}
