@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import HelloComponent from "./components/HelloComponent"
+import CounterComponent from "./components/CounterComponent"
 
 const wrapper = document.getElementById('base')
-wrapper && ReactDOM.render(<HelloComponent />, wrapper)
+wrapper && ReactDOM.render(<CounterComponent />, wrapper)
