@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 import background_url from '../assets/counter-background.png'
 
-const POLL_INTERVAL_MS = 500
+const POLL_INTERVAL_MS = 1000
 
 class CounterComponent extends Component {
   constructor() {
@@ -28,6 +28,9 @@ class CounterComponent extends Component {
         }
       })
       .then((data) => {
+        if(data.count === undefined) {
+          data.count = 0
+        }
         this.setState({count: data.count})
       })
       .finally(() => {

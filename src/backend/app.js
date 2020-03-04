@@ -1,55 +1,31 @@
-const //fs = require('fs'),
-      //http = require('http'),
-      //path = require('path'),
-      //methods = require('methods'),
-      //session = require('express-session'),
-      //cors = require('cors'),
-      //mongoose = require('mongoose')
-      express = require('express'),
-      bodyParser = require('body-parser'),
-      passport = require('passport')
+const express = require('express'),
+      bodyParser = require('body-parser')
 
 var isProduction = process.env.NODE_ENV === 'production'
 
 // Create global app object
 var app = express()
 
-//app.use(cors())
-
 // Normal express config defaults
 app.use(require('morgan')('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-//app.use(require('method-override')())
-//app.use(express.static(__dirname + '/public'))
-
-//app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }))
-
-if (isProduction) {
-  //TODO Handle errors in production
-  //app.use(prodErrorHandler())
+let firebase
+if(isProduction) {
+  const firebaseAdmin = require('firebase-admin')
+  const creds = {} //parse a JSON from file/env
+  firebaseAdmin.initializeApp({
+    credential: creds
+  })
+  firebase = firebaseAdmin.firestore()
 } else {
-  //TODO Build an error page
-  //app.use(errorhandler())
+  const MockFirebase = require('./mock-firebase')
+  firebase = new MockFirebase()
 }
+const routes = require('./routes')
 
-if(isProduction){
-  // connect to database
-  //mongoose.connect(process.env.MONGODB_URI)
-} else {
-  // connect to dev database
-  //mongoose.connect('mongodb://localhost/conduit')
-  //mongoose.set('debug', true)
-}
-
-// Require models
-//require('./models/User')
-//require('./models/Article')
-//require('./models/Comment')
-require('./config/passport')
-
-app.use(require('./routes'))
+app.use(routes(firebase))
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

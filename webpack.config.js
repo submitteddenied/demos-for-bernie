@@ -44,10 +44,7 @@ const frontend = {
     watchContentBase: true,
     liveReload: true,
     after: (app, server, compiler) => {
-      //console.log(`Including the backend...`)
-      const bodyParser = require('body-parser')
-      app.use(bodyParser.json())
-      app.use(require('./src/backend/routes'))
+      app.use(require('./src/backend/app'))
     }
   },
   plugins: [
