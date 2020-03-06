@@ -44,7 +44,7 @@ const frontend = {
     watchContentBase: true,
     liveReload: true,
     after: (app, server, compiler) => {
-      app.use(require('./src/backend/app'))
+      app.use(require('./src/backend/app')(__dirname))
     }
   },
   plugins: [
@@ -60,7 +60,8 @@ const backend = {
   entry: path.resolve("src/backend/dev.js"),
   target: "node",
   output: {
-    path: path.resolve(__dirname, "dist", "backend")
+    path: path.resolve(__dirname, "dist", "backend"),
+    publicPath: ''
   }
 }
 

@@ -14,7 +14,10 @@
       "program": "${workspaceFolder}\\node_modules\\webpack-dev-server\\bin\\webpack-dev-server.js",
       "args": [
         "--open", "--mode", "development", "--inspect-brk"
-      ]
+      ],
+      "env": {
+        "CRED_FILE": "${workspaceFolder}\\firebase-auth.json"
+      }
     }
   ]
 }

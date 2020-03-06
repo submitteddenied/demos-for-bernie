@@ -1,3 +1,7 @@
+variable "cred_file_path" {
+  default = "../firebase-auth.json"
+}
+
 provider "aws" {
   version = "~> 2.0"
   region  = "us-east-1"
@@ -34,6 +38,10 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
+locals {
+  cred_file = "creds.json"
+}
+
 resource "aws_lambda_function" "api_lambda" {
   filename      = data.archive_file.lambda-code.output_path
   function_name = "demo-counter-api"
@@ -43,16 +51,26 @@ resource "aws_lambda_function" "api_lambda" {
   source_code_hash = data.archive_file.lambda-code.output_base64sha256
 
   runtime = "nodejs12.x"
+  timeout = 10 #seconds
 
-  # environment {
-  #   variables = {
-      
-  #   }
-  # }
+  environment {
+    variables = {
+      CRED_FILE = "./${local.cred_file}"
+    }
+  }
 }
 
 data "archive_file" "lambda-code" {
   type = "zip"
-  source_file = "../dist/backend/main.js"
   output_path = "../dist/backend/lambda.zip"
+
+  source {
+    content = file("../dist/backend/main.js")
+    filename = "main.js"
+  }
+
+  source {
+    content = file(var.cred_file_path)
+    filename = local.cred_file
+  }
 }

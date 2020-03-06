@@ -1,3 +1,4 @@
 node_modules
 dist
 deploy/.terraform
+firebase-auth.json
