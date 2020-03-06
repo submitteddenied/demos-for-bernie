@@ -1,6 +1,6 @@
-import awsServerlessExpress  from 'aws-serverless-express'
+const awsServerlessExpress = require('aws-serverless-express')
 
-import app from './app'
+const app = require('./app')
 
 const server = awsServerlessExpress.createServer(app(process.env.LAMBDA_TASK_ROOT), null, [])
 

@@ -6,7 +6,7 @@ import db from '../services/database'
 
 const POLL_INTERVAL_MS = 1000
 
-class CounterComponent extends Component {
+class AdminComponent extends Component {
   constructor() {
     super()
     this.state = {
@@ -33,19 +33,28 @@ class CounterComponent extends Component {
 
   }
 
+  increment(e, count) {
+    e.preventDefault()
+    db.incrementCount(count)
+
+    return false
+  }
+
   render() {
     const containerStyle = {
-      backgroundImage: "url(" + background_url + ")"
-    }
-    const labelStyle = {
-      color: 'white'
+      background: '#222222'
     }
     return (
-      <div className="counter">
-        <h1 style={labelStyle}>{this.state.count}</h1>
+      <div className="admin">
+        <h1>Admin</h1>
+        <div onClick={(e) => this.increment(e, 1)}>
+          <div className="btn btn-primary">Demo!</div>
+          <h1>{this.state.count}</h1>
+        </div>
+        <div className="btn btn-danger" onClick={(e) => this.increment(e, -1)}>Decrement</div>
       </div>
     )
   }
 }
 
-export default CounterComponent
+export default AdminComponent

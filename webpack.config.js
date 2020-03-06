@@ -5,6 +5,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "dist", "frontend")
 const frontend = {
   entry: {
     app: path.resolve("src/frontend/index.js"),
+    admin: path.resolve("src/frontend/admin.js")
   },
   output: {
     path: OUTPUT_DIR,
@@ -50,7 +51,13 @@ const frontend = {
   plugins: [
     new HtmlWebPackPlugin({
       template: path.resolve("./src/frontend/index.html"),
-      filename: path.resolve(OUTPUT_DIR, "./index.html")
+      filename: path.resolve(OUTPUT_DIR, "./index.html"),
+      chunks: ['app']
+    }),
+    new HtmlWebPackPlugin({
+      template: path.resolve("./src/frontend/admin.html"),
+      filename: path.resolve(OUTPUT_DIR, "./admin.html"),
+      chunks: ['admin']
     })
     // To add more HTML entry points, add more HtmlWebPackPlugin instances to this list
   ]
@@ -62,6 +69,9 @@ const backend = {
   output: {
     path: path.resolve(__dirname, "dist", "backend"),
     publicPath: ''
+  },
+  externals: {
+    protobufjs: 'commonjs2 protobufjs'
   }
 }
 
