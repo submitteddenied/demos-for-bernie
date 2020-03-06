@@ -39,15 +39,6 @@ const frontend = {
       }
     ]
   },
-  devServer: {
-    contentBase: OUTPUT_DIR,
-    publicPath: '/',
-    watchContentBase: true,
-    liveReload: true,
-    after: (app, server, compiler) => {
-      app.use(require('./src/backend/app')(__dirname))
-    }
-  },
   plugins: [
     new HtmlWebPackPlugin({
       template: path.resolve("./src/frontend/index.html"),
@@ -63,21 +54,9 @@ const frontend = {
   ]
 }
 
-const backend = {
-  entry: path.resolve("src/backend/dev.js"),
-  target: "node",
-  output: {
-    path: path.resolve(__dirname, "dist", "backend"),
-    publicPath: ''
-  },
-  externals: {
-    protobufjs: 'commonjs2 protobufjs'
-  }
-}
-
 module.exports = (env, argv) => {
   if(argv.mode === 'production') {
-    backend.entry = path.resolve("src/backend/lambda.js")
+    // Production only settings here
   }
-  return [frontend, backend]
+  return [frontend]
 }
